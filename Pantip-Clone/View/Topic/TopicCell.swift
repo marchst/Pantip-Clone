@@ -29,26 +29,28 @@ struct TopicCell: View {
             }
             
             HStack {
-                NavigationLink(destination: ProfileView(viewModel: ProfileViewModel(user: viewModel.topic.user!)).navigationBarTitleDisplayMode(.inline)) {
-                    if let imageURL = viewModel.topic.ownerImageURL {
-                        KFImage(URL(string: imageURL))
-                            .resizeTo(width: 36, height: 36)
-                            .clipShape(Circle())
-                            .clipped()
-                    } else {
-                        Image(systemName: "person.crop.circle.fill")
-                            .resizeTo(width: 36, height: 36)
+                if let user = viewModel.topic.user {
+                    NavigationLink(destination: ProfileView(viewModel: ProfileViewModel(user: user)).navigationBarTitleDisplayMode(.inline)) {
+                        if let imageURL = viewModel.topic.ownerImageURL {
+                            KFImage(URL(string: imageURL))
+                                .resizeTo(width: 36, height: 36)
+                                .clipShape(Circle())
+                                .clipped()
+                        } else {
+                            Image(systemName: "person.crop.circle.fill")
+                                .resizeTo(width: 36, height: 36)
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            Text(viewModel.topic.ownerUsername)
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(.white)
+                            Text(viewModel.timestamp)
+                                .foregroundColor(.gray)
+                                .font(.system(size: 14, weight: .semibold))
+                        }
+                        .foregroundColor(.black)
                     }
-                    
-                    VStack(alignment: .leading) {
-                        Text(viewModel.topic.ownerUsername)
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundColor(.white)
-                        Text(viewModel.timestamp)
-                            .foregroundColor(.gray)
-                            .font(.system(size: 14, weight: .semibold))
-                    }
-                    .foregroundColor(.black)
                 }
                 
                 
@@ -105,9 +107,11 @@ struct TopicCell: View {
                 .foregroundColor(.white)
             
             if let imageURL = viewModel.topic.imageURL {
-                KFImage(URL(string: imageURL))
-                    .resizeTo(width: 250, height: 250)
-                    .clipped()
+                if !imageURL.isEmpty {
+                    KFImage(URL(string: imageURL))
+                        .resizeTo(width: 250, height: 250)
+                        .clipped()
+                }
             }
             
             HStack {
@@ -125,7 +129,7 @@ struct TopicCell: View {
                 } label: {
                     HStack {
                         Image(systemName: "plus")
-                            .foregroundColor(didVote ? .yellow : .blue)
+                            .foregroundColor(didVote ? .yellow : .gray)
                         Text("\(viewModel.topic.votes)")
                             .foregroundColor(didVote ? .yellow : .gray)
                     }

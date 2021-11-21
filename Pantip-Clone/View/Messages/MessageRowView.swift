@@ -16,48 +16,45 @@ struct MessageRowView: View {
     }
     
     var body: some View {
-        HStack(spacing: 15) {
-            if !ownAccount {
-                if let imageURL = message.ownerImageURL {
-                    KFImage(URL(string: imageURL))
-                        .resizeTo(width: 50, height: 50)
-                        .clipped()
-                        .clipShape(Circle())
+        VStack(alignment: .leading) {
+        HStack {
+            VStack {
+                if !ownAccount {
+                    if let imageURL = message.ownerImageURL {
+                        KFImage(URL(string: imageURL))
+                            .resizeTo(width: 50, height: 50)
+                            .clipped()
+                            .clipShape(Circle())
+                    }
+                }
+                
+                if ownAccount {
+                    if let imageURL = message.ownerImageURL {
+                        KFImage(URL(string: imageURL))
+                            .resizeTo(width: 50, height: 50)
+                            .clipped()
+                            .clipShape(Circle())
+                    }
                 }
             }
-            
-            if ownAccount {
-                Spacer(minLength: 0)
-            }
-            
-            VStack(spacing: 5) {
+            VStack {
                 Text(message.message)
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
                     .padding()
-                    .background(Color(UIColor(named: "topic-cell")!))
-//                    .clipShape(MessageBubble(ownAccount: ownAccount))
                     .clipShape(RoundedRectangle(cornerRadius: 3))
                 
                 Text(message.timestampText())
-                    .font(.caption2)
+                    .font(.caption2).bold()
                     .foregroundColor(.gray)
-                    .padding(ownAccount ? .trailing : .leading, 10)
+                    .padding(.bottom)
             }
-            
-            if !ownAccount {
-                Spacer(minLength: 0)
-            }
-            
-            if ownAccount {
-                if let imageURL = message.ownerImageURL {
-                    KFImage(URL(string: imageURL))
-                        .resizeTo(width: 50, height: 50)
-                        .clipped()
-                        .clipShape(Circle())
-                }
-            }
+            Spacer()
         }
         .padding()
+        .overlay(RoundedRectangle(cornerRadius: 3).stroke().foregroundColor(.gray))
+        .background(Color(UIColor(named: "topic-cell")!))
+        }
+        .padding(6)
     }
 }

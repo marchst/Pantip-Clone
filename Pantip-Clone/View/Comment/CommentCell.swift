@@ -12,7 +12,9 @@ struct CommentCell: View {
     @ObservedObject var viewModel: CommentCellViewModel
     @State var showReplyInputView = false
     @State var index: Int
-    let topic : Topic
+    @State var text = ""
+    var topic : Topic
+    var comment : Comment
     var didVote: Bool {
         viewModel.comment.didVote ?? false
     }
@@ -56,14 +58,11 @@ struct CommentCell: View {
                     Spacer()
                     
                     Button {
-                        showReplyInputView = true
+                        showReplyInputView.toggle()
                     } label: {
                         Image(systemName: "chevron.down")
                             .padding(4)
                             .overlay(RoundedRectangle(cornerRadius: 3).stroke())
-                    }
-                    .sheet(isPresented: $showReplyInputView) {
-                        ReplyInputView(viewModel: ReplyCommentViewModel(topic: topic, comment: viewModel.comment), showReplyInputView: $showReplyInputView)
                     }
                 }
                 
@@ -93,7 +92,7 @@ struct CommentCell: View {
                     } label: {
                         HStack {
                             Image(systemName: "plus")
-                                .foregroundColor(didVote ? .yellow : .blue)
+                                .foregroundColor(didVote ? .yellow : .gray)
                             Text("\(viewModel.comment.votes)")
                                 .foregroundColor(didVote ? .yellow : .gray)
                         }
@@ -124,11 +123,18 @@ struct CommentCell: View {
                     .foregroundColor(.gray)
             )
             .background(Color(UIColor(named: "comment-cell")!))
+            
+            if showReplyInputView {
+                CommentInputBox(viewModel: ReplyCommentViewModel(topic: topic, comment: comment), showCommentInputView: $showReplyInputView)
+                    .padding(.bottom, 4)
+            }
         
         }
-        
         .padding(.horizontal)
         .padding(.top, 4)
+        
+        
+      
     }
 }
 

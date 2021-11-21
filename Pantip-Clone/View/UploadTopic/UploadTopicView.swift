@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct UploadTopicView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var tags = ["","","","",""]
     @ObservedObject var viewModel = UploadTopicViewModel()
     @State var type: String
@@ -16,13 +17,55 @@ struct UploadTopicView: View {
     @State var selectedImage: UIImage?
     @State var topicImage: Image?
     @State var imagePickerPresented = false
+    @State var typeTitle: String
     @Binding var showUploadTopicView: Bool
     @State var showSelectTagView = false
     var body: some View {
+        VStack(spacing: 0) {
+        HStack {
+            Button {
+                self.presentationMode.wrappedValue.dismiss()
+            } label: {
+                Image(systemName: "chevron.backward")
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.gray)
+                    .padding(8)
+                    
+            }
+       
+            
+            
+            Spacer()
+            
+            
+            Text(typeTitle)
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundColor(Color(UIColor(named: "selected-icon")!))
+                .padding(.bottom, 8)
+            
+            Spacer()
+            
+            
+            Button {
+                showUploadTopicView.toggle()
+            } label: {
+                Image(systemName: "xmark")
+                    .resizable()
+                    .frame(width: 12, height: 12)
+                    .foregroundColor(Color(UIColor(named: "selected-icon")!))
+                    .clipped()
+            }
+            .padding(.trailing, 8)
+            .padding(8)
+            
+        }
+        .background(Color(UIColor(named: "tabbar")!))
         ScrollView {
             VStack(alignment: .leading) {
                 HStack {
                     Text("1. ระบุหัวข้อกระทู้ของคุณ")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(.gray)
                 }
                 
                 ZStack(alignment: .topLeading) {
@@ -41,6 +84,8 @@ struct UploadTopicView: View {
                     
                 HStack {
                     Text("2. เขียนรายละเอียดกระทู้")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(.gray)
                 }
                 
                 ZStack(alignment: .topLeading) {
@@ -57,40 +102,49 @@ struct UploadTopicView: View {
                        }
                        .font(.body)
                 
-                if topicImage == nil {
-                            Button(action: {
-                                imagePickerPresented.toggle()
-                            }) {
-                                Image(systemName: "plus.circle")
-                                    .resizeTo(width: 30, height: 30)
-                                    .padding(.top)
-                                    .foregroundColor(.black)
-                            }
-                            .sheet(isPresented: $imagePickerPresented) {
-                                loadImage()
-                            } content: {
-                                ImagePicker(image: $selectedImage)
-                            }
-                        } else if let image = topicImage {
-                            VStack {
-                                HStack(alignment: .top) {
-                                    image.resizeTo(width: 96, height: 96)
-                                        .clipped()
-                                }
-                                .padding()
-                            }
-                        }
-                
                 HStack {
-                    Text("3. เลือกแท็กที่เกี่ยวข้องกับกระทู้")
+                    Spacer()
+                    if topicImage == nil {
+                        Button(action: {
+                            imagePickerPresented.toggle()
+                        }) {
+                            Image(systemName: "plus.circle")
+                                .resizeTo(width: 30, height: 30)
+                                .padding([.top, .bottom])
+                                .foregroundColor(Color(UIColor(named: "selected-icon")!))
+                        }
+                        .sheet(isPresented: $imagePickerPresented) {
+                            loadImage()
+                        } content: {
+                            ImagePicker(image: $selectedImage)
+                        }
+                    } else if let image = topicImage {
+                        VStack {
+                            HStack(alignment: .top) {
+                                image.resizeTo(width: 96, height: 96)
+                                    .clipped()
+                            }
+                            .padding()
+                        }
+                    }
+                    Spacer()
                 }
                 
                 HStack {
+                    Text("3. เลือกแท็กที่เกี่ยวข้องกับกระทู้")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(.gray)
+                }
+                
+                HStack {
+                    Spacer()
                     Button {
                         showSelectTagView.toggle()
                     } label: {
                         if tags[0].isEmpty {
                             Text("เพิ่มแท็ก")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundColor(Color(UIColor(named: "selected-icon")!))
                                 .padding()
                                 .border(.gray)
                         } else {
@@ -102,7 +156,9 @@ struct UploadTopicView: View {
                     .sheet(isPresented: $showSelectTagView) {
                         SelectTagView(tags: $tags)
                     }
+                    Spacer()
                 }
+                .padding()
                 
                 Button {
                     if let image = selectedImage {
@@ -116,6 +172,7 @@ struct UploadTopicView: View {
                     topicImage = nil
                 } label: {
                     Text("ส่งกระทู้")
+                        .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.white)
                         .frame(width: 360, height: 35)
                         .background(.green)
@@ -123,8 +180,10 @@ struct UploadTopicView: View {
                 }
 //            }.background(Color(UIColor(named: "background")!))
         }
-//        .background(Color(UIColor(named: "background")!))
+            
         .padding()
+        }
+        .background(Color(UIColor(named: "background")!))
     }
     }
     
@@ -134,8 +193,8 @@ struct UploadTopicView: View {
         }
 }
 
-struct UploadTopicView_Previews: PreviewProvider {
-    static var previews: some View {
-        UploadTopicView(type: "news", showUploadTopicView: .constant(true))
-    }
-}
+//struct UploadTopicView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UploadTopicView(type: "news", showUploadTopicView: .constant(true))
+//    }
+//}

@@ -122,8 +122,9 @@ struct HeaderView: View {
                         .frame(width: 24, height: 24)
                         .foregroundColor(.gray)
                         .clipped()
+                        .opacity(0)
                 }
-                .disabled(selectedIndex == 2 ? true : false)
+                .disabled(true)
                 .padding(.trailing ,8)
                 .padding(.bottom, 8)
             }
@@ -143,7 +144,7 @@ struct HeaderView: View {
                 Button {
                     showUploadTopicView.toggle()
                 } label: {
-                    Image(selectedIndex == 3 ? "email_plus" : "new_topic")
+                    Image("new_topic")
                         .resizable()
                         .clipShape(Circle())
                         .frame(width: 24, height: 24)

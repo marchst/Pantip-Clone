@@ -32,12 +32,12 @@ struct Topic: Decodable, Identifiable {
     var didLike: Bool? = false
     var didVote: Bool? = false
     
-    func timestampText() -> String {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.second, .minute, .hour, .day, .weekOfMonth]
-        formatter.maximumUnitCount = 2
-        formatter.unitsStyle = .abbreviated
-        return formatter.string(from: timestamp.dateValue(), to:  Date()) ?? ""
-    }
+//    func timestampText() -> String {
+//        let formatter = DateComponentsFormatter()
+//        formatter.allowedUnits = [.second, .minute, .hour, .day, .weekOfMonth]
+//        formatter.maximumUnitCount = 2
+//        formatter.unitsStyle = .abbreviated
+//        return formatter.string(from: timestamp.dateValue(), to:  Date()) ?? ""
+//    }
 }
 

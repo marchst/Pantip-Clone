@@ -24,11 +24,6 @@ struct TopicView: View {
                         .padding(.bottom, 8)
                 }
                 
-                Circle()
-                    .frame(width: 24, height: 24)
-                    .padding(.leading, 8)
-                    .opacity(0)
-                
                 
                 Spacer()
                 
@@ -40,19 +35,6 @@ struct TopicView: View {
                 
                 Spacer()
                 
-                Button() {
-                    
-                } label: {
-                    Image("search")
-                        .resizable()
-                        .clipShape(Circle())
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.gray)
-                        .clipped()
-                }
-                .padding(.trailing ,8)
-                .padding(.bottom, 8)
-                
                 Button {
                     
                 } label: {
@@ -62,7 +44,9 @@ struct TopicView: View {
                         .frame(width: 24, height: 24)
                         .foregroundColor(.gray)
                         .clipped()
+                        .opacity(0)
                 }
+                .disabled(true)
                 .padding(8)
                 .padding(.bottom, 8)
                 
@@ -72,7 +56,7 @@ struct TopicView: View {
             ScrollView {
                 VStack {
                     TopicCell(viewModel: viewModel)
-                    CommentView(topic: viewModel.topic)
+                    CommentView(viewModel: CommentViewModel(topic: viewModel.topic))
                 }
             }
             .background(Color(UIColor(named: "background")!))
@@ -81,22 +65,18 @@ struct TopicView: View {
                 Button {
                     showCommentInputView.toggle()
                 } label: {
-                    Text("แสดงความคิดเห็น")
-                        .font(.system(size: 18, weight: .semibold))
-                        .padding()
+                    HStack {
+                        Spacer()
+                        Text("แสดงความคิดเห็น")
+                            .font(.system(size: 18, weight: .semibold))
+                            .padding()
+                        Spacer()
+                    }
                 }
-                .padding(.horizontal, 24)
                 .border(.gray)
                 .foregroundColor(.gray)
                 Spacer()
                 
-//                Button {
-//
-//                } label: {
-//                    Image(systemName: "star")
-//                        .frame(width: 20)
-//                        .padding()
-//                }
             }
             .background(Color(UIColor(named: "comment")!))
             .sheet(isPresented: $showCommentInputView) {

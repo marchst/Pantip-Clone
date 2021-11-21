@@ -23,8 +23,8 @@ struct OwnTopicListView: View {
                         HStack {
                             Text(topic.ownerUsername)
                                 .font(.caption2)
-                            Text(topic.timestampText())
-                                .font(.caption2)
+//                            Text(topic.timestampText())
+//                                .font(.caption2)
                             Spacer()
     //                        Image("comments")
     //                            .resizable()

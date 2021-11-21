@@ -14,11 +14,11 @@ struct ProfileButtonView: View {
         if !viewModel.user.isCurrentUser {
             HStack(spacing: 16) {
                 if let user = viewModel.user {
-                    NavigationLink(destination: MessageChatView(user: user)) {
-                        Text("Message")
+                    NavigationLink(destination: MessageChatView(user: user).navigationBarHidden(true)) {
+                        Text("ส่งข้อความ")
                             .font(.system(size: 14, weight: .semibold))
                             .frame(width: 172, height: 32)
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 3)
                                     .stroke(Color.gray, lineWidth: 1)

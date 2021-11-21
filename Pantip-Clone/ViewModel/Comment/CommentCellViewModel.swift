@@ -10,11 +10,14 @@ import Firebase
 
 class CommentCellViewModel: ObservableObject {
     @Published var comment: Comment
+    let topic: Topic
     
-    init(comment: Comment) {
+    init(comment: Comment, topic: Topic) {
         self.comment = comment
+        self.topic = topic
         fetchUser()
         checkVote()
+        checkLike()
     }
     
     func fetchUser() {
@@ -35,10 +38,12 @@ class CommentCellViewModel: ObservableObject {
         if let didVote = comment.didVote, didVote {
             return
         }
+        
+        guard let topicID = topic.id else { return }
         guard let commentID = comment.id else { return }
         guard let userID = AuthViewModel.shared.userSession?.uid else { return }
 
-        Firestore.firestore().collection("comments").document(commentID).collection("comment-votes").document(userID).setData([:]) { error in
+        Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-votes").document(userID).setData([:]) { error in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -50,7 +55,7 @@ class CommentCellViewModel: ObservableObject {
                     return
                 }
 
-                Firestore.firestore().collection("comments").document(commentID).updateData([ "votes": self.comment.votes + 1 ]) { error in
+                Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).updateData([ "votes": self.comment.votes + 1 ]) { error in
                     if let error = error {
                         print(error.localizedDescription)
                         return
@@ -65,10 +70,11 @@ class CommentCellViewModel: ObservableObject {
     }
     
     func checkVote() {
+        guard let topicID = topic.id else { return }
         guard let commentID = comment.id else { return }
         guard let userID = AuthViewModel.shared.userSession?.uid else { return }
 
-        Firestore.firestore().collection("comments").document(commentID).collection("comment-votes").document(userID).getDocument { (snap, error) in
+        Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-votes").document(userID).getDocument { (snap, error) in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -83,10 +89,12 @@ class CommentCellViewModel: ObservableObject {
         if let didVote = comment.didVote, !didVote {
             return
         }
+        
+        guard let topicID = topic.id else { return }
         guard let commentID = comment.id else { return }
         guard let userID = AuthViewModel.shared.userSession?.uid else { return }
 
-        Firestore.firestore().collection("comments").document(commentID).collection("comment-votes").document(userID).delete() { error in
+        Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-votes").document(userID).delete() { error in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -98,7 +106,7 @@ class CommentCellViewModel: ObservableObject {
                     return
                 }
 
-                Firestore.firestore().collection("comments").document(commentID).updateData([ "votes": self.comment.votes - 1 ]) { error in
+                Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).updateData([ "votes": self.comment.votes - 1 ]) { error in
                     if let error = error {
                         print(error.localizedDescription)
                         return
@@ -115,10 +123,11 @@ class CommentCellViewModel: ObservableObject {
         if let didLike = comment.didLike, didLike {
             return
         }
+        guard let topicID = topic.id else { return }
         guard let commentID = comment.id else { return }
         guard let userID = AuthViewModel.shared.userSession?.uid else { return }
 
-        Firestore.firestore().collection("comments").document(commentID).collection("comment-likes").document(userID).setData([:]) { error in
+        Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-likes").document(userID).setData([:]) { error in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -130,7 +139,7 @@ class CommentCellViewModel: ObservableObject {
                     return
                 }
 
-                Firestore.firestore().collection("comments").document(commentID).updateData([ "likes": self.comment.likes + 1 ]) { error in
+                Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).updateData([ "likes": self.comment.likes + 1 ]) { error in
                     if let error = error {
                         print(error.localizedDescription)
                         return
@@ -145,10 +154,11 @@ class CommentCellViewModel: ObservableObject {
     }
     
     func checkLike() {
+        guard let topicID = topic.id else { return }
         guard let commentID = comment.id else { return }
         guard let userID = AuthViewModel.shared.userSession?.uid else { return }
 
-        Firestore.firestore().collection("comments").document(commentID).collection("comment-likes").document(userID).getDocument { (snap, error) in
+        Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-likes").document(userID).getDocument { (snap, error) in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -163,10 +173,11 @@ class CommentCellViewModel: ObservableObject {
         if let didLike = comment.didLike, !didLike {
             return
         }
+        guard let topicID = topic.id else { return }
         guard let commentID = comment.id else { return }
         guard let userID = AuthViewModel.shared.userSession?.uid else { return }
 
-        Firestore.firestore().collection("comments").document(commentID).collection("comment-likes").document(userID).delete() { error in
+        Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-likes").document(userID).delete() { error in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -178,7 +189,7 @@ class CommentCellViewModel: ObservableObject {
                     return
                 }
 
-                Firestore.firestore().collection("comments").document(commentID).updateData([ "likes": self.comment.likes - 1 ]) { error in
+                Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).updateData([ "likes": self.comment.likes - 1 ]) { error in
                     if let error = error {
                         print(error.localizedDescription)
                         return

@@ -58,15 +58,15 @@ struct ReplyCommentCell: View {
                     Spacer()
                     
                     Button {
-                        showReplyInputView = true
+                        showReplyInputView.toggle()
                     } label: {
                         Image(systemName: "chevron.down")
                             .padding(4)
                             .overlay(RoundedRectangle(cornerRadius: 3).stroke())
                     }
-                    .sheet(isPresented: $showReplyInputView) {
-                        ReplyInputView(viewModel: ReplyCommentViewModel(topic: topic, comment: comment), showReplyInputView: $showReplyInputView)
-                    }
+//                    .sheet(isPresented: $showReplyInputView) {
+//                        ReplyInputView(viewModel: ReplyCommentViewModel(topic: topic, comment: comment), showReplyInputView: $showReplyInputView)
+//                    }
                 }
                 
                 Text(viewModel.replyComment.replyComment)
@@ -95,7 +95,7 @@ struct ReplyCommentCell: View {
                     } label: {
                         HStack {
                             Image(systemName: "plus")
-                                .foregroundColor(didVote ? .yellow : .blue)
+                                .foregroundColor(didVote ? .yellow : .gray)
                             Text("\(viewModel.replyComment.votes)")
                                 .foregroundColor(didVote ? .yellow : .gray)
                         }
@@ -126,6 +126,11 @@ struct ReplyCommentCell: View {
                     .stroke()
                     .foregroundColor(.gray)
             )
+            
+            if showReplyInputView {
+                CommentInputBox(viewModel: ReplyCommentViewModel(topic: topic, comment: comment), showCommentInputView: $showReplyInputView)
+                    .padding(.bottom, 4)
+            }
         
         }
         .padding(.horizontal)

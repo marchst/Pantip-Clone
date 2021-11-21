@@ -11,10 +11,16 @@ import Firebase
 class ReplyCellViewModel: ObservableObject {
     @Published var replyComment: ReplyComment
     
-    init(replyComment: ReplyComment) {
+    let topic: Topic
+    let comment: Comment
+    
+    init(replyComment: ReplyComment, topic:Topic, comment: Comment) {
         self.replyComment = replyComment
+        self.topic = topic
+        self.comment = comment
         fetchUser()
         checkVote()
+        checkLike()
     }
     
     func fetchUser() {
@@ -35,10 +41,13 @@ class ReplyCellViewModel: ObservableObject {
         if let didVote = replyComment.didVote, didVote {
             return
         }
+        
+        guard let topicID = topic.id else { return }
+        guard let commentID = comment.id else { return }
         guard let replyCommentID = replyComment.id else { return }
         guard let userID = AuthViewModel.shared.userSession?.uid else { return }
         
-        Firestore.firestore().collection("replyComments").document(replyCommentID).collection("replyComment-votes").document(userID).setData([:]) { error in
+        Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-replys").document(replyCommentID).collection("comment-replys-votes").document(userID).setData([:]) { error in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -50,7 +59,7 @@ class ReplyCellViewModel: ObservableObject {
                     return
                 }
                 
-                Firestore.firestore().collection("replyComments").document(replyCommentID).updateData([ "votes": self.replyComment.votes + 1 ]) { error in
+                Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-replys").document(replyCommentID).updateData([ "votes": self.replyComment.votes + 1 ]) { error in
                     if let error = error {
                         print(error.localizedDescription)
                         return
@@ -65,10 +74,12 @@ class ReplyCellViewModel: ObservableObject {
     }
     
     func checkVote() {
+        guard let topicID = topic.id else { return }
+        guard let commentID = comment.id else { return }
         guard let replyCommentID = replyComment.id else { return }
         guard let userID = AuthViewModel.shared.userSession?.uid else { return }
         
-        Firestore.firestore().collection("replyComments").document(replyCommentID).collection("replyComment-votes").document(userID).getDocument { (snap, error) in
+        Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-replys").document(replyCommentID).collection("comment-replys-votes").document(userID).getDocument { (snap, error) in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -83,10 +94,13 @@ class ReplyCellViewModel: ObservableObject {
         if let didVote = replyComment.didVote, !didVote {
             return
         }
+        
+        guard let topicID = topic.id else { return }
+        guard let commentID = comment.id else { return }
         guard let replyCommentID = replyComment.id else { return }
         guard let userID = AuthViewModel.shared.userSession?.uid else { return }
         
-        Firestore.firestore().collection("replyComments").document(replyCommentID).collection("replyComment-votes").document(userID).delete() { error in
+        Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-replys").document(replyCommentID).collection("comment-replys-votes").document(userID).delete() { error in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -115,10 +129,13 @@ class ReplyCellViewModel: ObservableObject {
         if let didLike = replyComment.didLike, didLike {
             return
         }
+        
+        guard let topicID = topic.id else { return }
+        guard let commentID = comment.id else { return }
         guard let replyCommentID = replyComment.id else { return }
         guard let userID = AuthViewModel.shared.userSession?.uid else { return }
 
-        Firestore.firestore().collection("replyComments").document(replyCommentID).collection("replyComment-likes").document(userID).setData([:]) { error in
+        Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-replys").document(replyCommentID).collection("comment-replys-likes").document(userID).setData([:]) { error in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -130,7 +147,7 @@ class ReplyCellViewModel: ObservableObject {
                     return
                 }
 
-                Firestore.firestore().collection("replyComments").document(replyCommentID).updateData([ "likes": self.replyComment.likes + 1 ]) { error in
+                Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-replys").document(replyCommentID).updateData([ "likes": self.replyComment.likes + 1 ]) { error in
                     if let error = error {
                         print(error.localizedDescription)
                         return
@@ -145,10 +162,12 @@ class ReplyCellViewModel: ObservableObject {
     }
     
     func checkLike() {
+        guard let topicID = topic.id else { return }
+        guard let commentID = comment.id else { return }
         guard let replyCommentID = replyComment.id else { return }
         guard let userID = AuthViewModel.shared.userSession?.uid else { return }
 
-        Firestore.firestore().collection("replyComments").document(replyCommentID).collection("replyComment-likes").document(userID).getDocument { (snap, error) in
+        Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-replys").document(replyCommentID).collection("comment-replys-likes").document(userID).getDocument { (snap, error) in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -163,10 +182,13 @@ class ReplyCellViewModel: ObservableObject {
         if let didLike = replyComment.didLike, !didLike {
             return
         }
+        
+        guard let topicID = topic.id else { return }
+        guard let commentID = comment.id else { return }
         guard let replyCommentID = replyComment.id else { return }
         guard let userID = AuthViewModel.shared.userSession?.uid else { return }
 
-        Firestore.firestore().collection("replyComments").document(replyCommentID).collection("replyComment-likes").document(userID).delete() { error in
+        Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-replys").document(replyCommentID).collection("comment-replys-likes").document(userID).delete() { error in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -178,7 +200,7 @@ class ReplyCellViewModel: ObservableObject {
                     return
                 }
 
-                Firestore.firestore().collection("replyComments").document(replyCommentID).updateData([ "likes": self.replyComment.likes - 1 ]) { error in
+                Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-replys").document(replyCommentID).updateData([ "likes": self.replyComment.likes - 1 ]) { error in
                     if let error = error {
                         print(error.localizedDescription)
                         return
@@ -192,11 +214,14 @@ class ReplyCellViewModel: ObservableObject {
     }
     
     var timestamp: String {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.locale = Locale(identifier: "th_TH")
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.second, .minute, .hour, .day, .weekOfMonth]
         formatter.maximumUnitCount = 3
         formatter.unitsStyle = .abbreviated
         return formatter.string(from: replyComment.timestamp.dateValue(), to:  Date()) ?? ""
+//        return dateFormatter.string(from: replyComment.timestamp.dateValue())
     }
     
     //    var likeText: String {

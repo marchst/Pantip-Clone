@@ -87,7 +87,7 @@ class ReplyCommentViewModel: ObservableObject {
            guard let topicID = topic.id else { return }
            guard let commentID = comment.id else { return }
            
-           Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-replys").order(by: "timestamp",descending: true).addSnapshotListener { (snap, error) in
+           Firestore.firestore().collection("topics").document(topicID).collection("topic-comments").document(commentID).collection("comment-replys").order(by: "timestamp",descending: false).addSnapshotListener { (snap, error) in
                if let error = error {
                    print(error.localizedDescription)
                    return

@@ -15,10 +15,12 @@ struct MessageInputView: View {
     @State var messageImage: Image?
     @State var imagePickerPresented = false
     @State var message = ""
+    
     var body: some View {
         NavigationView {
-            VStack {
-                ZStack(alignment: .topLeading) {
+            VStack(spacing: 0) {
+                
+                    ZStack(alignment: .topLeading) {
                            if message.isEmpty {
                                Text("")
                                    .foregroundColor(Color(UIColor.placeholderText))
@@ -32,30 +34,41 @@ struct MessageInputView: View {
                        }
                 .font(.body)
                 .padding()
+                .background(Color(UIColor(named: "background")!))
                 
-                if messageImage == nil {
+                HStack {
+                    if messageImage == nil {
+                        Spacer()
                             Button(action: {
                                 imagePickerPresented.toggle()
                             }) {
                                 Image(systemName: "plus.circle")
                                     .resizeTo(width: 30, height: 30)
                                     .padding(.top)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.gray)
                             }
                             .sheet(isPresented: $imagePickerPresented) {
                                 loadImage()
                             } content: {
                                 ImagePicker(image: $selectedImage)
                             }
+                            .padding()
+                        Spacer()
                         } else if let image = messageImage {
-                            VStack {
+                            VStack(spacing: 0) {
                                 HStack(alignment: .top) {
+                                    Spacer()
                                     image.resizeTo(width: 96, height: 96)
                                         .clipped()
+                                    Spacer()
                                 }
                                 .padding()
                             }
+                            .background(Color(UIColor(named: "background")!))
                         }
+                }
+                .background(Color(UIColor(named: "background")!))
+                
                 
                 HStack {
                     
@@ -93,10 +106,13 @@ struct MessageInputView: View {
                                     .foregroundColor(.gray)
                             )
                     }
+                    .background(Color(UIColor(named: "tabbar")!))
                 }
                 .padding(.horizontal)
+                .background(Color(UIColor(named: "tabbar")!))
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationBarTitle("แสดงความคิดเห็น")
+                .navigationBarTitle("ส่งข้อความ")
+                .foregroundColor(.gray)
             }
         }
     }

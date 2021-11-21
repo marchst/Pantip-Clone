@@ -33,7 +33,24 @@ struct TagView: View {
                             VStack {
                                 ForEach(viewModel.tags) { tag in
                                     NavigationLink(destination: SearchView(searchText: .constant(tag.name), inSearchMode: .constant(false), searchType: "tag").navigationBarTitleDisplayMode(.inline)) {
-                                        Text(tag.name)
+                                        HStack {
+                                            Spacer()
+                                            Text(tag.name)
+                                                .font(.system(size: 28, weight: .semibold))
+                                                .padding()
+                                            Spacer()
+                                        }
+                                        .overlay(
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: 5)
+                                                    .foregroundColor(Color(UIColor(named: "tabbar")!))
+                                                    .opacity(0.5)
+    //                                                .stroke()
+                                            }
+                                        )
+                                        .padding(.horizontal, 48)
+                                        .padding(.top, 8)
+                                        
                                     }
                                 }
                                 

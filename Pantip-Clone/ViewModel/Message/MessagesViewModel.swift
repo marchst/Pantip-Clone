@@ -16,7 +16,7 @@ class MessagesViewModel: ObservableObject {
     init(user: User) {
         self.user = user
         fetchMessage()
-        fetchReciever()
+//        fetchReciever()
     }
     
     func fetchMessage() {
@@ -34,17 +34,17 @@ class MessagesViewModel: ObservableObject {
         }
     }
     
-    func fetchReciever() {
-        guard let senderID = AuthViewModel.shared.userSession?.uid else { return }
-        
-        print(senderID)
-        
-        let ref = Firestore.firestore().collection("messages").document(senderID).collection("user-messages")
-        
-        let a = ref.getDocuments { (snap, error) in
-            if let snap = snap {
+//    func fetchReciever() {
+//        guard let senderID = AuthViewModel.shared.userSession?.uid else { return }
+//
+//        print(senderID)
+//
+//        let ref = Firestore.firestore().collection("messages").document(senderID).collection("user-messages")
+//
+//        let a = ref.getDocuments { (snap, error) in
+//            if let snap = snap {
 //                print(querySnapshot)
-                print(snap.count)
+//                print(snap.count)
 //                for document in querySnapshot.documents {
 //                    print("----------")
 //                    let id = document.documentID
@@ -54,8 +54,8 @@ class MessagesViewModel: ObservableObject {
 //                    print(id)
 //                    // Do something.
 //                }
-            }
-        }
+//            }
+//        }
         //            self.recievers.append(contentsOf: documentChanges.compactMap { try? $0.document.data(as: String.self) })
         
         //            for id in documentChanges {
@@ -72,7 +72,7 @@ class MessagesViewModel: ObservableObject {
         //            }
         //            print("------------")
         //            print(self.recievers)
-    }
+//    }
     
     
     func sendMessage(image: UIImage?, title: String, message: String) {

@@ -86,6 +86,16 @@ struct MessageChatView: View {
             ScrollViewReader { reader in
                 ScrollView {
                     VStack {
+                        if viewModel.messages.count == 0 {
+                            HStack {
+                                Spacer()
+                                Text("ไม่มีข้อความ")
+                                    .foregroundColor(.gray)
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .padding()
+                                Spacer()
+                            }
+                        }
                         ForEach(viewModel.messages) { message in
                             MessageRowView(message: message)
                                 .onAppear {
@@ -107,11 +117,11 @@ struct MessageChatView: View {
                 Text("พิมพ์ข้อความ...")
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundColor(Color(UIColor(named: "selected-icon")!))
-                    .background(Color(UIColor(named: "comment")!))
                     .padding()
                     
             }
             .padding(.horizontal, 24)
+            .background(Color(UIColor(named: "comment")!))
             .border(.gray)
             .foregroundColor(.black)
             

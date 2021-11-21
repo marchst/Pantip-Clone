@@ -13,8 +13,8 @@ struct CustomTopTabBar: View {
         HStack(spacing: 20) {
             TabBarButton(text: "กระทู้ที่ตั้ง", isSelected: .constant(tabIndex == 0))
                 .onTapGesture { onButtonTapped(index: 0) }
-            TabBarButton(text: "กระทู้ที่ตอบ", isSelected: .constant(tabIndex == 1))
-                .onTapGesture { onButtonTapped(index: 1) }
+//            TabBarButton(text: "กระทู้ที่ตอบ", isSelected: .constant(tabIndex == 1))
+//                .onTapGesture { onButtonTapped(index: 1) }
             Spacer()
         }
         .background(Color(UIColor(named: "tabbar")!))

@@ -14,7 +14,6 @@ struct SelectTopicTypeView: View {
             VStack(spacing: 0) {
                 HStack {
                     Button {
-//                        self.presentationMode.wrappedValue.dismiss()
                     } label: {
                         Image(systemName: "chevron.backward")
                             .frame(width: 24, height: 24)
@@ -42,10 +41,11 @@ struct SelectTopicTypeView: View {
                     } label: {
                         Image(systemName: "xmark")
                             .resizable()
-                            .frame(width: 14, height: 14)
+                            .frame(width: 12, height: 12)
                             .foregroundColor(Color(UIColor(named: "selected-icon")!))
                             .clipped()
                     }
+                    .padding(.trailing, 8)
                     .padding(8)
                     
                 }
@@ -56,7 +56,7 @@ struct SelectTopicTypeView: View {
                         .foregroundColor(.gray)
                         .font(.caption2)
                     
-                    NavigationLink(destination: UploadTopicView(type: "question", showUploadTopicView: $showUploadTopicView).navigationBarTitleDisplayMode(.inline)) {
+                    NavigationLink(destination: UploadTopicView(type: "question", typeTitle: "กระทู้คำถาม", showUploadTopicView: $showUploadTopicView).navigationBarHidden(true)) {
                         HStack {
                             Image("question")
                                 .resizeTo(width: 38, height: 38)
@@ -71,7 +71,7 @@ struct SelectTopicTypeView: View {
                         }
                     }
                     
-                    NavigationLink(destination: UploadTopicView(type: "conversation", showUploadTopicView: $showUploadTopicView).navigationBarTitleDisplayMode(.inline)) {
+                    NavigationLink(destination: UploadTopicView(type: "conversation", typeTitle: "กระทู้สนทนา", showUploadTopicView: $showUploadTopicView).navigationBarTitleDisplayMode(.inline)) {
                         HStack {
                             Image("conversation")
                                 .resizeTo(width: 26, height: 26)
@@ -89,7 +89,7 @@ struct SelectTopicTypeView: View {
                         }
                     }
                     
-                    NavigationLink(destination: UploadTopicView(type: "news", showUploadTopicView: $showUploadTopicView).navigationBarTitleDisplayMode(.inline)) {
+                    NavigationLink(destination: UploadTopicView(type: "news", typeTitle: "กระทู้ข่าว", showUploadTopicView: $showUploadTopicView).navigationBarTitleDisplayMode(.inline)) {
                         HStack {
                             Image("news")
                                 .resizeTo(width: 38, height: 38)

@@ -10,18 +10,25 @@ import SwiftUI
 struct TopicListCell: View {
     let topic: Topic
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text(topic.title)
-                    .font(.title)
-                Spacer()
-                Image(systemName: "chevron.forward")
+        ZStack {
+            RoundedRectangle(cornerRadius: 5)
+                .foregroundColor(Color(UIColor(named: "tabbar")!))
+                .opacity(0.5)
+            VStack(alignment: .leading) {
+                HStack {
+                    Text(topic.title)
+                        .font(.title).bold()
+                    Spacer()
+                    Image(systemName: "chevron.forward")
+                        .padding(.trailing, 6)
+                }
+                Text(topic.caption)
+                    .bold()
             }
-            Text(topic.caption)
+            .padding(8)
+            .overlay(RoundedRectangle(cornerRadius: 3).stroke())
+            .padding(.top, 4)
         }
-        .padding(4)
-        .overlay(RoundedRectangle(cornerRadius: 3).stroke())
-        .padding(.top, 4)
     }
 }
 

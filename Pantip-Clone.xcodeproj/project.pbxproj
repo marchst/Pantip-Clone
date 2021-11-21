@@ -65,6 +65,7 @@
 		90D6EB8B274A88A500CD12A2 /* CountCommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D6EB8A274A88A500CD12A2 /* CountCommentViewModel.swift */; };
 		90D6EB8D274A8BA700CD12A2 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D6EB8C274A8BA700CD12A2 /* Tag.swift */; };
 		90D6EB90274A8BE000CD12A2 /* TagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D6EB8F274A8BE000CD12A2 /* TagViewModel.swift */; };
+		90D6EB92274AE21100CD12A2 /* CommentInputBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D6EB91274AE21000CD12A2 /* CommentInputBox.swift */; };
 		90DDE8002742D7E20026FD75 /* SigninView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDE7FF2742D7E20026FD75 /* SigninView.swift */; };
 		90DDE8022742D7F80026FD75 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDE8012742D7F80026FD75 /* RegisterView.swift */; };
 		90DDE8042742D8450026FD75 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDE8032742D8450026FD75 /* ForgotPasswordView.swift */; };
@@ -142,6 +143,7 @@
 		90D6EB8A274A88A500CD12A2 /* CountCommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountCommentViewModel.swift; sourceTree = "<group>"; };
 		90D6EB8C274A8BA700CD12A2 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		90D6EB8F274A8BE000CD12A2 /* TagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewModel.swift; sourceTree = "<group>"; };
+		90D6EB91274AE21000CD12A2 /* CommentInputBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentInputBox.swift; sourceTree = "<group>"; };
 		90DDE7FF2742D7E20026FD75 /* SigninView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninView.swift; sourceTree = "<group>"; };
 		90DDE8012742D7F80026FD75 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		90DDE8032742D8450026FD75 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 		90D6EB5227491C9500CD12A2 /* Comment */ = {
 			isa = PBXGroup;
 			children = (
+				90D6EB91274AE21000CD12A2 /* CommentInputBox.swift */,
 				90D6EB452749113A00CD12A2 /* CommentCell.swift */,
 				90D6EB5327491CCF00CD12A2 /* CommentView.swift */,
 				90D6EB59274921CB00CD12A2 /* CommentInputView.swift */,
@@ -619,6 +622,7 @@
 				90D6EB5E2749713800CD12A2 /* ReplyCommentCell.swift in Sources */,
 				90D6EB3527483A0E00CD12A2 /* SelectTagView.swift in Sources */,
 				90D6EB7D2749B7C400CD12A2 /* NotificationsCellViewModel.swift in Sources */,
+				90D6EB92274AE21100CD12A2 /* CommentInputBox.swift in Sources */,
 				90DDE8002742D7E20026FD75 /* SigninView.swift in Sources */,
 				90D6EB602749745400CD12A2 /* ReplyCommentView.swift in Sources */,
 				90DDE8042742D8450026FD75 /* ForgotPasswordView.swift in Sources */,

@@ -99,7 +99,7 @@ struct CommentInputView: View {
                 .padding(.horizontal)
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarTitle("แสดงความคิดเห็น")
-                .background(Color(UIColor(named: "background")!))
+//                .background(Color(UIColor(named: "background")!))
             }
         }
     }

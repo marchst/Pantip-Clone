@@ -53,7 +53,9 @@ struct ProfileView: View {
                         .frame(width: 24, height: 24)
                         .foregroundColor(.gray)
                         .clipped()
+                        .opacity(0)
                 }
+                .disabled(true)
                 .padding(.trailing ,8)
                 .padding(.bottom, 8)
                 
@@ -66,7 +68,9 @@ struct ProfileView: View {
                         .frame(width: 24, height: 24)
                         .foregroundColor(.gray)
                         .clipped()
+                        .opacity(0)
                 }
+                .disabled(true)
                 .padding(8)
                 .padding(.bottom, 8)
                 
@@ -122,18 +126,20 @@ struct ProfileView: View {
                     
                     ProfileButtonView(viewModel: viewModel)
                     
-                    VStack{
-                        CustomTopTabBar(tabIndex: $tabIndex)
-                        if tabIndex == 0 {
-                            OwnTopicListView()
+                    if viewModel.user.isCurrentUser {
+                        VStack{
+                            CustomTopTabBar(tabIndex: $tabIndex)
+                            if tabIndex == 0 {
+                                OwnTopicListView()
+                            }
+    //                        else {
+    //                            AnswerTopicListView()
+    //                        }
+                            Spacer()
                         }
-//                        else {
-//                            AnswerTopicListView()
-//                        }
-                        Spacer()
+                        .frame(width: UIScreen.main.bounds.width - 24, alignment: .center)
+                        .padding(.horizontal, 12)
                     }
-                    .frame(width: UIScreen.main.bounds.width - 24, alignment: .center)
-                    .padding(.horizontal, 12)
                 }
             }
             .padding(.top, 4)

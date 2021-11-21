@@ -32,9 +32,10 @@ struct MessagesView: View {
                             Spacer()
                             Text("ไม่มีข้อความ")
                                 .foregroundColor(.gray)
+                                .font(.system(size: 14, weight: .semibold))
+                                .padding()
                             Spacer()
                         }
-                        .padding()
                     }
                 }
                 .background(Color(UIColor(named: "background")!))

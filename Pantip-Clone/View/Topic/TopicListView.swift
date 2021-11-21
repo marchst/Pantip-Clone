@@ -82,9 +82,11 @@ struct TopicListView: View {
                             .frame(width: 24, height: 24)
                             .foregroundColor(.gray)
                             .clipped()
+                            .opacity(0)
                     }
                     .padding(.trailing ,8)
                     .padding(.bottom, 8)
+                    .disabled(true)
                     
                     Button {
                         
@@ -95,9 +97,11 @@ struct TopicListView: View {
                             .frame(width: 24, height: 24)
                             .foregroundColor(.gray)
                             .clipped()
+                            .opacity(0)
                     }
                     .padding(8)
                     .padding(.bottom, 8)
+                    .disabled(true)
                     
                 }
                 .background(Color(UIColor(named: "tabbar")!))
