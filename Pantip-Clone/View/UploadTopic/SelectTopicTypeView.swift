@@ -71,7 +71,7 @@ struct SelectTopicTypeView: View {
                         }
                     }
                     
-                    NavigationLink(destination: UploadTopicView(type: "conversation", typeTitle: "กระทู้สนทนา", showUploadTopicView: $showUploadTopicView).navigationBarTitleDisplayMode(.inline)) {
+                    NavigationLink(destination: UploadTopicView(type: "conversation", typeTitle: "กระทู้สนทนา", showUploadTopicView: $showUploadTopicView).navigationBarHidden(true)) {
                         HStack {
                             Image("conversation")
                                 .resizeTo(width: 26, height: 26)
@@ -89,7 +89,7 @@ struct SelectTopicTypeView: View {
                         }
                     }
                     
-                    NavigationLink(destination: UploadTopicView(type: "news", typeTitle: "กระทู้ข่าว", showUploadTopicView: $showUploadTopicView).navigationBarTitleDisplayMode(.inline)) {
+                    NavigationLink(destination: UploadTopicView(type: "news", typeTitle: "กระทู้ข่าว", showUploadTopicView: $showUploadTopicView).navigationBarHidden(true)) {
                         HStack {
                             Image("news")
                                 .resizeTo(width: 38, height: 38)

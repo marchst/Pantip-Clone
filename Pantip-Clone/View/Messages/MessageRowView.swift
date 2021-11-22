@@ -37,16 +37,28 @@ struct MessageRowView: View {
                     }
                 }
             }
-            VStack {
+            VStack(alignment: .leading) {
                 Text(message.message)
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
                     .padding()
                     .clipShape(RoundedRectangle(cornerRadius: 3))
                 
+                if let messageImageURL = message.imageURL {
+                    if !messageImageURL.isEmpty {
+                        KFImage(URL(string: messageImageURL))
+                            .resizable()
+                            .resizeTo(width: 150, height: 150)
+                            .clipped()
+                            .clipShape(RoundedRectangle(cornerRadius: 3))
+                            .padding(.leading)
+                    }
+                }
+                
                 Text(message.timestampText())
                     .font(.caption2).bold()
                     .foregroundColor(.gray)
+                    .padding(.leading)
                     .padding(.bottom)
             }
             Spacer()
